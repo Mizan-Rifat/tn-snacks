@@ -11,26 +11,17 @@ import { useSelector } from 'react-redux';
 import AddItemDialog from './AddItemDialog';
 import useOrdersHook from 'hooks/useOrdersHooks';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import { Edit } from '@mui/icons-material';
 
 const getTotalPrice = items =>
   items.reduce((acc, val) => acc + Number(val.qty * val.price), 0);
 
 const Home = () => {
   const [open, setOpen] = useState();
-  const [snackItem, setSnackItem] = useState({});
   const { currentUserOrders } = useSelector(state => state.snackOrders);
 
   const { snackOrder } = useSelector(state => state.snackOrders);
-  const { items } = useSelector(state => state.snackItems);
 
   const { handleDeleteOrder } = useOrdersHook();
-
-  const handleUpdateOrder = row => {
-    console.log({ row });
-    setSnackItem(row);
-    setOpen(true);
-  };
 
   console.log({ currentUserOrders });
   return snackOrder ? (
@@ -45,12 +36,6 @@ const Home = () => {
                 </TableCell>
                 <TableCell>{row.price * row.qty} /-</TableCell>
                 <TableCell align="right">
-                  <IconButton size="small">
-                    <Edit
-                      fontSize="small"
-                      onClick={() => handleUpdateOrder(row)}
-                    />
-                  </IconButton>
                   <IconButton
                     aria-label="delete"
                     size="small"
@@ -82,7 +67,7 @@ const Home = () => {
           Add Item
         </Button>
       </Box>
-      <AddItemDialog open={open} setOpen={setOpen} snackItem={snackItem} />
+      <AddItemDialog open={open} setOpen={setOpen} />
     </>
   ) : (
     <Box

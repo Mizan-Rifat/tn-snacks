@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box } from '@mui/system';
 import {
   Button,
@@ -13,12 +13,9 @@ import {
   Select
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  addUserSnackOrder,
-  updateUserSnackOrder
-} from 'redux/slices/snackOrdersSlice';
+import { addUserSnackOrder } from 'redux/slices/snackOrdersSlice';
 
-const AddItemDialog = ({ open, setOpen, snackItem }) => {
+const AddItemDialog = ({ open, setOpen }) => {
   const [selectedItem, setSelectedItem] = useState({});
   const [qty, setQty] = useState(0);
 
@@ -28,8 +25,6 @@ const AddItemDialog = ({ open, setOpen, snackItem }) => {
 
   const handleClose = () => {
     setOpen(false);
-    setSelectedItem({});
-    setQty(0);
   };
 
   const handleChange = ({ target: { value } }) => {
@@ -38,29 +33,15 @@ const AddItemDialog = ({ open, setOpen, snackItem }) => {
   };
 
   const handleSubmit = () => {
-    console.log({ snackItem });
-    // dispatch(
-    //   addUserSnackOrder({
-    //     itemId: selectedItem.id,
-    //     qty,
-    //     uid: currentUser.id
-    //   })
-    // );
     dispatch(
-      updateUserSnackOrder({
-        id: selectedItem.id,
-        data: {
-          qty
-        }
+      addUserSnackOrder({
+        itemId: selectedItem.id,
+        qty,
+        uid: currentUser.id
       })
     );
     setOpen(false);
   };
-
-  useEffect(() => {
-    setSelectedItem(items.find(item => item.id === snackItem.itemId) || {});
-    setQty(snackItem.qty || 0);
-  }, [snackItem]);
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -74,7 +55,6 @@ const AddItemDialog = ({ open, setOpen, snackItem }) => {
             id="demo-simple-select"
             label="Item"
             onChange={handleChange}
-            value={selectedItem}
           >
             {items.map(item => (
               <MenuItem key={item.id} value={item}>
