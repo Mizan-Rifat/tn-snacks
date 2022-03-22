@@ -56,6 +56,10 @@ const App = () => {
                       path="orders/history"
                       element={<SnackOrdersHistory />}
                     />
+                    <Route
+                      path="orders/history/self"
+                      element={<SnackOrdersHistory self={true} />}
+                    />
                     <Route element={<AdminProtectedRoute />}>
                       <Route path="admin" element={<AdminHome />} />
                       <Route path="admin/users" element={<Users />} />
