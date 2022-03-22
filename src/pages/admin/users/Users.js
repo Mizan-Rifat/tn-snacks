@@ -66,14 +66,13 @@ const Users = () => {
               <TableRow key={row.id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.name}</TableCell>
-                <TableCell align="center">{row.deposit || 0} /-</TableCell>
+                <TableCell align="center">{row.deposit || 0}</TableCell>
                 <TableCell align="center">
-                  {getDebit(row.id, completedSnackOrders) || 0} /-
+                  {getDebit(row.id, completedSnackOrders) || 0}
                 </TableCell>
                 <TableCell align="center">
                   {(row.deposit || 0) -
-                    getDebit(row.id, completedSnackOrders) || 0}{' '}
-                  /-
+                    getDebit(row.id, completedSnackOrders) || 0}
                 </TableCell>
                 <TableCell align="right">
                   <IconButton

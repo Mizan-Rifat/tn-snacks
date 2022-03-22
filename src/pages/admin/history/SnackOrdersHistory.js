@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import { formatDate } from 'utils';
 import { getDebit } from '../users/Users';
 
-const SnackOrdersHistory = () => {
+const SnackOrdersHistory = ({ self }) => {
   const [data, setData] = useState([]);
   const { completedSnackOrders, loading, currentUserCompletedSnackOrders } =
     useSelector(state => state.snackOrders);
@@ -25,15 +25,15 @@ const SnackOrdersHistory = () => {
   useSnackOrdersHistory();
 
   useEffect(() => {
-    currentUser.role === 'admin'
-      ? setData(completedSnackOrders)
-      : setData(currentUserCompletedSnackOrders);
-  }, [completedSnackOrders, currentUserCompletedSnackOrders]);
+    self
+      ? setData(currentUserCompletedSnackOrders)
+      : setData(completedSnackOrders);
+  }, [completedSnackOrders, currentUserCompletedSnackOrders, self]);
 
   return (
     <>
       <AppBackdrop open={loading} />
-      {currentUser.role !== 'admin' && (
+      {self && (
         <>
           <Grid container columnSpacing={3}>
             <Grid item xs={6} sx={{ textAlign: 'end' }}>
@@ -53,8 +53,7 @@ const SnackOrdersHistory = () => {
               <p>
                 Debit :{' '}
                 <span style={{ fontWeight: 600 }}>
-                  {getDebit(currentUser.id, currentUserCompletedSnackOrders)}
-                  /-
+                  {getDebit(currentUser.id, currentUserCompletedSnackOrders)} /-
                 </span>
               </p>
             </Grid>
@@ -82,8 +81,8 @@ const SnackOrdersHistory = () => {
                 <TableCell>{row.userName}</TableCell>
                 <TableCell>{row.itemName}</TableCell>
                 <TableCell align="center">{row.qty}</TableCell>
-                <TableCell align="center">{row.itemPrice} /-</TableCell>
-                <TableCell align="center">{row.totalPrice} /-</TableCell>
+                <TableCell align="center">{row.itemPrice}</TableCell>
+                <TableCell align="center">{row.totalPrice}</TableCell>
               </TableRow>
             ))}
           </TableBody>

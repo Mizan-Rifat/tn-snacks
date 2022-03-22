@@ -34,11 +34,6 @@ const Sidebar = ({ mobileOpen, setMobileOpen }) => {
               icon: <HomeIcon />
             },
             {
-              title: 'My Order',
-              to: '/',
-              icon: <PersonIcon />
-            },
-            {
               title: 'Users',
               to: '/admin/users',
               icon: <GroupIcon />
@@ -52,6 +47,16 @@ const Sidebar = ({ mobileOpen, setMobileOpen }) => {
               title: 'Snack Orders History',
               to: '/orders/history',
               icon: <RestaurantMenuIcon />
+            },
+            {
+              title: 'My Order',
+              to: '/',
+              icon: <PersonIcon />
+            },
+            {
+              title: 'My Order History',
+              to: '/orders/history/self',
+              icon: <PersonIcon />
             }
           ]
         : [
@@ -62,7 +67,7 @@ const Sidebar = ({ mobileOpen, setMobileOpen }) => {
             },
             {
               title: 'Snack Orders History',
-              to: '/orders/history',
+              to: '/orders/history/self',
               icon: <RestaurantMenuIcon />
             }
           ]
