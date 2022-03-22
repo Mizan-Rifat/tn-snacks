@@ -20,7 +20,7 @@ const SnackOrdersHistory = () => {
   const [data, setData] = useState([]);
   const { completedSnackOrders, loading, currentUserCompletedSnackOrders } =
     useSelector(state => state.snackOrders);
-  const { currentUser, users } = useSelector(state => state.users);
+  const { currentUser } = useSelector(state => state.users);
 
   useSnackOrdersHistory();
 
@@ -30,7 +30,6 @@ const SnackOrdersHistory = () => {
       : setData(currentUserCompletedSnackOrders);
   }, [completedSnackOrders, currentUserCompletedSnackOrders]);
 
-  console.log({ users });
   return (
     <>
       <AppBackdrop open={loading} />

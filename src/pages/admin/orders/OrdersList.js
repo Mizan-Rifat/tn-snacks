@@ -73,8 +73,6 @@ const OrderList = () => {
         } taking orders?`
       });
 
-      console.log({ id: snackOrder.id, open: !snackOrder.open });
-
       await dispatch(
         updateSnackOrder({
           id: snackOrder.id,
@@ -83,7 +81,6 @@ const OrderList = () => {
       );
     } catch (error) {
       console.log({ error });
-      console.log('no');
     }
   };
 

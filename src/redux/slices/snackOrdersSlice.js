@@ -16,8 +16,6 @@ const getSnackUsersOrderRef = orderId => `/snackOrders/${orderId}/userOrders`;
 export const completeSnackOrders = createAsyncThunk(
   'sanck_orders/complete_order',
   async (orders, { getState }) => {
-    console.log(orders);
-
     try {
       orders.forEach(async order => {
         await addDoc(completedSnackOrdersRef, order);
@@ -37,7 +35,6 @@ export const completeSnackOrders = createAsyncThunk(
 export const addSnackOrder = createAsyncThunk(
   'sanck_orders/add_user_order',
   async data => {
-    console.log(data);
     try {
       const item = await addDoc(snackOrdersRef, data);
       toast.success('Successfully created.');
@@ -51,7 +48,6 @@ export const addSnackOrder = createAsyncThunk(
 export const addUserSnackOrder = createAsyncThunk(
   'sanck_orders/add_user_order',
   async (data, { getState }) => {
-    console.log(data);
     const snackUsersOrderRef = collection(
       db,
       getSnackUsersOrderRef(getState().snackOrders.snackOrder.id)
@@ -70,7 +66,6 @@ export const addUserSnackOrder = createAsyncThunk(
 export const updateUserSnackOrder = createAsyncThunk(
   'sanck_orders/update_user_order',
   async ({ id, data }, { getState }) => {
-    console.log({ id, data });
     const docRef = doc(
       db,
       `${getSnackUsersOrderRef(getState().snackOrders.snackOrder.id)}/${id}`

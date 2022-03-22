@@ -23,7 +23,6 @@ const Home = () => {
 
   const { handleDeleteOrder } = useOrdersHook();
 
-  console.log({ currentUserOrders });
   return snackOrder ? (
     <>
       <TableContainer>

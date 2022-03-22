@@ -33,8 +33,6 @@ const Users = () => {
   );
 
   useSnackOrdersHistory();
-  console.log({ users });
-  console.log({ completedSnackOrders });
   const dispatch = useDispatch();
 
   useEffect(() => {

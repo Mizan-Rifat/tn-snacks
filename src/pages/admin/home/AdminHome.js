@@ -60,8 +60,6 @@ const AdminHome = () => {
 
   useOrdersHook();
 
-  console.log({ snackOrder });
-
   return (
     !loading && (
       <>

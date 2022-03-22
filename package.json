@@ -1,6 +1,6 @@
 {
   "name": "tn-snacks",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "homepage": "https://mizan-rifat.github.io/tn-sancks/",
   "dependencies": {
     "@emotion/react": "^11.8.2",
@@ -37,6 +37,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "predeploy": "cp ./build/index.html ./build/404.html",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
