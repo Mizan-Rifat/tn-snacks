@@ -56,12 +56,10 @@ export const usersSlice = createSlice({
       state.fetching = false;
     },
     setCurrentUser: (state, { payload }) => {
-      console.log({ payload });
       state.currentUser = payload;
       state.loading = false;
     },
     usersfetched: (state, action) => {
-      console.log('sdf');
       state.users = action.payload;
       state.fetching = false;
       state.loading = false;

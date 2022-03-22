@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -10,6 +10,7 @@ import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import { Divider } from '@mui/material';
 import { useSelector } from 'react-redux';
 import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
 
 const Sidebar = ({ mobileOpen, setMobileOpen }) => {
   const navigate = useNavigate();
@@ -31,6 +32,11 @@ const Sidebar = ({ mobileOpen, setMobileOpen }) => {
               title: 'Home',
               to: '/admin',
               icon: <HomeIcon />
+            },
+            {
+              title: 'My Order',
+              to: '/',
+              icon: <PersonIcon />
             },
             {
               title: 'Users',
@@ -67,13 +73,13 @@ const Sidebar = ({ mobileOpen, setMobileOpen }) => {
   return (
     <List>
       {listItems.map(item => (
-        <>
+        <Fragment key={item.to}>
           <ListItem button key={item.to} onClick={() => handleClick(item.to)}>
             <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
             <ListItemText primary={item.title} />
           </ListItem>
           <Divider />
-        </>
+        </Fragment>
       ))}
     </List>
   );

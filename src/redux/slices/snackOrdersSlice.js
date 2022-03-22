@@ -16,8 +16,6 @@ const getSnackUsersOrderRef = orderId => `/snackOrders/${orderId}/userOrders`;
 export const completeSnackOrders = createAsyncThunk(
   'sanck_orders/complete_order',
   async (orders, { getState }) => {
-    console.log(orders);
-
     try {
       orders.forEach(async order => {
         await addDoc(completedSnackOrdersRef, order);
@@ -37,7 +35,6 @@ export const completeSnackOrders = createAsyncThunk(
 export const addSnackOrder = createAsyncThunk(
   'sanck_orders/add_user_order',
   async data => {
-    console.log(data);
     try {
       const item = await addDoc(snackOrdersRef, data);
       toast.success('Successfully created.');
@@ -51,7 +48,6 @@ export const addSnackOrder = createAsyncThunk(
 export const addUserSnackOrder = createAsyncThunk(
   'sanck_orders/add_user_order',
   async (data, { getState }) => {
-    console.log(data);
     const snackUsersOrderRef = collection(
       db,
       getSnackUsersOrderRef(getState().snackOrders.snackOrder.id)
@@ -60,6 +56,22 @@ export const addUserSnackOrder = createAsyncThunk(
       const item = await addDoc(snackUsersOrderRef, data);
 
       toast.success('Successfully created.');
+      return item;
+    } catch (error) {
+      console.log({ error });
+    }
+  }
+);
+
+export const updateUserSnackOrder = createAsyncThunk(
+  'sanck_orders/update_user_order',
+  async ({ id, data }, { getState }) => {
+    const docRef = doc(
+      db,
+      `${getSnackUsersOrderRef(getState().snackOrders.snackOrder.id)}/${id}`
+    );
+    try {
+      const item = await updateDoc(docRef, data);
       return item;
     } catch (error) {
       console.log({ error });
@@ -79,6 +91,21 @@ export const deleteUserSnackOrder = createAsyncThunk(
     try {
       const item = await deleteDoc(snackUsersOrderRef);
       toast.success('Successfully deleted.');
+      return item;
+    } catch (error) {
+      console.log({ error });
+    }
+  }
+);
+
+export const updateSnackOrder = createAsyncThunk(
+  'sanck_orders/update_snack_order',
+  async ({ id, data }) => {
+    const docRef = doc(db, 'snackOrders', id);
+
+    try {
+      const item = await updateDoc(docRef, data);
+      toast.success('Successfully updated.');
       return item;
     } catch (error) {
       console.log({ error });

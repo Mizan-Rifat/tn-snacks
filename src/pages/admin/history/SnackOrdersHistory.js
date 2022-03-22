@@ -20,7 +20,7 @@ const SnackOrdersHistory = () => {
   const [data, setData] = useState([]);
   const { completedSnackOrders, loading, currentUserCompletedSnackOrders } =
     useSelector(state => state.snackOrders);
-  const { currentUser, users } = useSelector(state => state.users);
+  const { currentUser } = useSelector(state => state.users);
 
   useSnackOrdersHistory();
 
@@ -30,7 +30,6 @@ const SnackOrdersHistory = () => {
       : setData(currentUserCompletedSnackOrders);
   }, [completedSnackOrders, currentUserCompletedSnackOrders]);
 
-  console.log({ users });
   return (
     <>
       <AppBackdrop open={loading} />
@@ -41,7 +40,12 @@ const SnackOrdersHistory = () => {
               <p>
                 Credit :{' '}
                 <span style={{ fontWeight: 600 }}>
-                  {currentUser.deposit || 0} /-
+                  {(currentUser.deposit || 0) -
+                    getDebit(
+                      currentUser.id,
+                      currentUserCompletedSnackOrders
+                    )}{' '}
+                  /-
                 </span>
               </p>
             </Grid>
@@ -67,7 +71,7 @@ const SnackOrdersHistory = () => {
               <TableCell>Item</TableCell>
               <TableCell align="center">Qty</TableCell>
               <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Total Price</TableCell>
+              <TableCell align="center">Total Cost</TableCell>
             </TableRow>
           </TableHead>
 
@@ -78,8 +82,8 @@ const SnackOrdersHistory = () => {
                 <TableCell>{row.userName}</TableCell>
                 <TableCell>{row.itemName}</TableCell>
                 <TableCell align="center">{row.qty}</TableCell>
-                <TableCell align="center">{row.itemPrice}</TableCell>
-                <TableCell align="center">{row.totalPrice}</TableCell>
+                <TableCell align="center">{row.itemPrice} /-</TableCell>
+                <TableCell align="center">{row.totalPrice} /-</TableCell>
               </TableRow>
             ))}
           </TableBody>

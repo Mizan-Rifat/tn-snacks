@@ -23,7 +23,6 @@ const Home = () => {
 
   const { handleDeleteOrder } = useOrdersHook();
 
-  console.log({ currentUserOrders });
   return snackOrder ? (
     <>
       <TableContainer>
@@ -34,12 +33,13 @@ const Home = () => {
                 <TableCell>
                   {row.name} ({row.qty})
                 </TableCell>
-                <TableCell>{row.price * row.qty}</TableCell>
+                <TableCell>{row.price * row.qty} /-</TableCell>
                 <TableCell align="right">
                   <IconButton
                     aria-label="delete"
                     size="small"
                     onClick={() => handleDeleteOrder(row.id)}
+                    disabled={!snackOrder.open}
                   >
                     <CancelIcon fontSize="small" />
                   </IconButton>
@@ -49,17 +49,19 @@ const Home = () => {
 
             <TableRow>
               <TableCell>Total</TableCell>
-              <TableCell>{getTotalPrice(currentUserOrders)}</TableCell>
+              <TableCell>{getTotalPrice(currentUserOrders)} /-</TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
       <Box sx={{ textAlign: 'center', my: 3 }}>
+        {!snackOrder.open && <h3>Order request is closed now.</h3>}
         <Button
           variant="contained"
           color="primary"
           onClick={() => setOpen(true)}
+          disabled={!snackOrder.open}
         >
           Add Item
         </Button>
