@@ -52,8 +52,6 @@ export default function Items() {
     }
   }, []);
 
-  console.log({ items, fetching });
-
   return (
     <>
       <AppBackdrop open={fetching} />

@@ -24,8 +24,6 @@ import AdminProtectedRoute from 'components/auth/AdminProtectedRoute';
 import Register from 'pages/Register';
 
 const App = () => {
-  console.log({ theme });
-
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +44,7 @@ const App = () => {
         <ConfirmationProvider>
           <CssBaseline />
           {!loading && (
-            <BrowserRouter>
+            <BrowserRouter basename="/tn-sancks">
               <Routes>
                 <Route path="/" element={<Layout />}>
                   <Route path="login" element={<Login />} />
