@@ -18,3 +18,6 @@ export const formatDate = (date, showYears) => {
   const format = `DD MMM${showYears ? ', YYYY' : ''}`;
   return dayjs(date).format(format);
 };
+
+export const getTotal = (arr, field) =>
+  arr.reduce((acc, val) => acc + val[field], 0);

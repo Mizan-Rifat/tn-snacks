@@ -73,15 +73,8 @@ export default function Items() {
               <TableRow key={row.id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.name}</TableCell>
-                <TableCell align="center">{row.price}</TableCell>
+                <TableCell align="center">{row.price} /-</TableCell>
                 <TableCell align="right">
-                  <IconButton
-                    aria-label="delete"
-                    size="small"
-                    onClick={() => handleDelete(row.id)}
-                  >
-                    <Delete fontSize="small" />
-                  </IconButton>
                   <IconButton
                     aria-label="delete"
                     size="small"
@@ -89,6 +82,13 @@ export default function Items() {
                     to={`edit/${row.id}`}
                   >
                     <Edit fontSize="small" />
+                  </IconButton>
+                  <IconButton
+                    aria-label="delete"
+                    size="small"
+                    onClick={() => handleDelete(row.id)}
+                  >
+                    <Delete fontSize="small" />
                   </IconButton>
                 </TableCell>
               </TableRow>

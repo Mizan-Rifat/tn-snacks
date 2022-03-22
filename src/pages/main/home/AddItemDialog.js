@@ -80,7 +80,9 @@ const AddItemDialog = ({ open, setOpen }) => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button variant="outlined" color="error" onClick={handleClose}>
+          Cancel
+        </Button>
         <Button onClick={handleSubmit}>OK</Button>
       </DialogActions>
     </Dialog>

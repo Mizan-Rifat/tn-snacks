@@ -21,7 +21,9 @@ const FormDialog = ({ open, setOpen }) => {
   };
 
   const handleSubmit = () => {
-    dispatch(addSnackOrder({ date: dayjs(date).format(), status: true }));
+    dispatch(
+      addSnackOrder({ date: dayjs(date).format(), status: true, open: true })
+    );
 
     setOpen(false);
   };
@@ -57,6 +59,8 @@ const AdminHome = () => {
   const { snackOrder, loading } = useSelector(state => state.snackOrders);
 
   useOrdersHook();
+
+  console.log({ snackOrder });
 
   return (
     !loading && (

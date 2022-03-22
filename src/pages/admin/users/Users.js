@@ -58,6 +58,7 @@ const Users = () => {
               <TableCell>Name</TableCell>
               <TableCell align="center">Deposit</TableCell>
               <TableCell align="right">Debit</TableCell>
+              <TableCell align="right">Credit</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
@@ -67,9 +68,14 @@ const Users = () => {
               <TableRow key={row.id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.name}</TableCell>
-                <TableCell align="center">{row.deposit || 0}</TableCell>
+                <TableCell align="center">{row.deposit || 0} /-</TableCell>
                 <TableCell align="center">
-                  {getDebit(row.id, completedSnackOrders) || 0}
+                  {getDebit(row.id, completedSnackOrders) || 0} /-
+                </TableCell>
+                <TableCell align="center">
+                  {(row.deposit || 0) -
+                    getDebit(row.id, completedSnackOrders) || 0}{' '}
+                  /-
                 </TableCell>
                 <TableCell align="right">
                   <IconButton

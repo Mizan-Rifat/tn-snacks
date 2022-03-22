@@ -67,6 +67,23 @@ export const addUserSnackOrder = createAsyncThunk(
   }
 );
 
+export const updateUserSnackOrder = createAsyncThunk(
+  'sanck_orders/update_user_order',
+  async ({ id, data }, { getState }) => {
+    console.log({ id, data });
+    const docRef = doc(
+      db,
+      `${getSnackUsersOrderRef(getState().snackOrders.snackOrder.id)}/${id}`
+    );
+    try {
+      const item = await updateDoc(docRef, data);
+      return item;
+    } catch (error) {
+      console.log({ error });
+    }
+  }
+);
+
 export const deleteUserSnackOrder = createAsyncThunk(
   'sanck_orders/delete_user_order',
   async (id, { getState }) => {
@@ -79,6 +96,21 @@ export const deleteUserSnackOrder = createAsyncThunk(
     try {
       const item = await deleteDoc(snackUsersOrderRef);
       toast.success('Successfully deleted.');
+      return item;
+    } catch (error) {
+      console.log({ error });
+    }
+  }
+);
+
+export const updateSnackOrder = createAsyncThunk(
+  'sanck_orders/update_snack_order',
+  async ({ id, data }) => {
+    const docRef = doc(db, 'snackOrders', id);
+
+    try {
+      const item = await updateDoc(docRef, data);
+      toast.success('Successfully updated.');
       return item;
     } catch (error) {
       console.log({ error });
