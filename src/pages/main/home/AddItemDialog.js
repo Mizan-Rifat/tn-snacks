@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import {
   Button,
@@ -13,9 +13,12 @@ import {
   Select
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUserSnackOrder } from 'redux/slices/snackOrdersSlice';
+import {
+  addUserSnackOrder,
+  updateUserSnackOrder
+} from 'redux/slices/snackOrdersSlice';
 
-const AddItemDialog = ({ open, setOpen }) => {
+const AddItemDialog = ({ open, setOpen, snackItem }) => {
   const [selectedItem, setSelectedItem] = useState({});
   const [qty, setQty] = useState(0);
 
@@ -25,6 +28,8 @@ const AddItemDialog = ({ open, setOpen }) => {
 
   const handleClose = () => {
     setOpen(false);
+    setSelectedItem({});
+    setQty(0);
   };
 
   const handleChange = ({ target: { value } }) => {
@@ -33,15 +38,29 @@ const AddItemDialog = ({ open, setOpen }) => {
   };
 
   const handleSubmit = () => {
+    console.log({ snackItem });
+    // dispatch(
+    //   addUserSnackOrder({
+    //     itemId: selectedItem.id,
+    //     qty,
+    //     uid: currentUser.id
+    //   })
+    // );
     dispatch(
-      addUserSnackOrder({
-        itemId: selectedItem.id,
-        qty,
-        uid: currentUser.id
+      updateUserSnackOrder({
+        id: selectedItem.id,
+        data: {
+          qty
+        }
       })
     );
     setOpen(false);
   };
+
+  useEffect(() => {
+    setSelectedItem(items.find(item => item.id === snackItem.itemId) || {});
+    setQty(snackItem.qty || 0);
+  }, [snackItem]);
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -55,6 +74,7 @@ const AddItemDialog = ({ open, setOpen }) => {
             id="demo-simple-select"
             label="Item"
             onChange={handleChange}
+            value={selectedItem}
           >
             {items.map(item => (
               <MenuItem key={item.id} value={item}>
@@ -80,7 +100,9 @@ const AddItemDialog = ({ open, setOpen }) => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button variant="outlined" color="error" onClick={handleClose}>
+          Cancel
+        </Button>
         <Button onClick={handleSubmit}>OK</Button>
       </DialogActions>
     </Dialog>
