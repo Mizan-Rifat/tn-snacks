@@ -138,7 +138,13 @@ const OrderList = () => {
             )}
 
             <TableRow>
-              <TableCell colSpan={5} sx={{ borderBottom: 'none', pt: 2 }} />
+              <TableCell
+                align="center"
+                colSpan={5}
+                sx={{ borderBottom: 'none', pt: 3, fontWeight: 700 }}
+              >
+                Total Orders
+              </TableCell>
             </TableRow>
 
             {getSumOfOrders(userOrders).map(row => (
@@ -165,7 +171,7 @@ const OrderList = () => {
         </Table>
       </TableContainer>
 
-      <Stack spacing={1} sx={{ px: 8, py: 4 }}>
+      <Stack spacing={1} sx={{ px: 6, py: 4 }}>
         <Button
           variant="outlined"
           color={snackOrder.open ? 'error' : 'primary'}

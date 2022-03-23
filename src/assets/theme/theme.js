@@ -31,7 +31,8 @@ theme = createTheme(theme, {
     MuiTableCell: {
       styleOverrides: {
         root: {
-          padding: '6px 12px'
+          padding: '6px 12px',
+          whiteSpace: 'nowrap'
         }
       }
     },
