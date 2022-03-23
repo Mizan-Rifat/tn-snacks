@@ -35,8 +35,24 @@ const SnackOrdersHistory = ({ self }) => {
       <AppBackdrop open={loading} />
       {self && (
         <>
-          <Grid container columnSpacing={3}>
-            <Grid item xs={6} sx={{ textAlign: 'end' }}>
+          <Grid container spacing={3}>
+            <Grid item xs={4}>
+              <p>
+                Deposit :{' '}
+                <span style={{ fontWeight: 600 }}>
+                  {currentUser.deposit || 0} /-
+                </span>
+              </p>
+            </Grid>
+            <Grid item xs={4} sx={{ textAlign: 'center' }}>
+              <p>
+                Debit :{' '}
+                <span style={{ fontWeight: 600 }}>
+                  {getDebit(currentUser.id, currentUserCompletedSnackOrders)} /-
+                </span>
+              </p>
+            </Grid>
+            <Grid item xs={4} sx={{ textAlign: 'right' }}>
               <p>
                 Credit :{' '}
                 <span style={{ fontWeight: 600 }}>
@@ -49,16 +65,8 @@ const SnackOrdersHistory = ({ self }) => {
                 </span>
               </p>
             </Grid>
-            <Grid item xs={6}>
-              <p>
-                Debit :{' '}
-                <span style={{ fontWeight: 600 }}>
-                  {getDebit(currentUser.id, currentUserCompletedSnackOrders)} /-
-                </span>
-              </p>
-            </Grid>
           </Grid>
-          <Divider variant="middle" sx={{ mb: 2 }} />
+          <Divider sx={{ mb: 2 }} />
         </>
       )}
       <TableContainer component={Paper}>
@@ -81,8 +89,8 @@ const SnackOrdersHistory = ({ self }) => {
                 <TableCell>{row.userName}</TableCell>
                 <TableCell>{row.itemName}</TableCell>
                 <TableCell align="center">{row.qty}</TableCell>
-                <TableCell align="center">{row.itemPrice}</TableCell>
-                <TableCell align="center">{row.totalPrice}</TableCell>
+                <TableCell align="center">{row.itemPrice} /-</TableCell>
+                <TableCell align="center">{row.totalPrice} /-</TableCell>
               </TableRow>
             ))}
           </TableBody>

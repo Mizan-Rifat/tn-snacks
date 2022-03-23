@@ -26,6 +26,7 @@ const Users = () => {
   const usersRef = collection(db, 'users');
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [toralCredits, setTotalCredits] = useState(0);
 
   const { users, loading } = useSelector(state => state.users);
   const { completedSnackOrders, loading: snackOrdersLoading } = useSelector(
@@ -34,6 +35,17 @@ const Users = () => {
 
   useSnackOrdersHistory();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const total = users
+      .filter(user => user.deposit)
+      .reduce(
+        (acc, val) =>
+          acc + (val.deposit - getDebit(val.id, completedSnackOrders)),
+        0
+      );
+    setTotalCredits(total);
+  }, [completedSnackOrders, users]);
 
   useEffect(() => {
     if (!users.length) {
@@ -66,13 +78,14 @@ const Users = () => {
               <TableRow key={row.id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.name}</TableCell>
-                <TableCell align="center">{row.deposit || 0}</TableCell>
+                <TableCell align="center">{row.deposit || 0} /-</TableCell>
                 <TableCell align="center">
-                  {getDebit(row.id, completedSnackOrders) || 0}
+                  {getDebit(row.id, completedSnackOrders) || 0} /-
                 </TableCell>
                 <TableCell align="center">
                   {(row.deposit || 0) -
-                    getDebit(row.id, completedSnackOrders) || 0}
+                    getDebit(row.id, completedSnackOrders) || 0}{' '}
+                  /-
                 </TableCell>
                 <TableCell align="right">
                   <IconButton
@@ -88,6 +101,12 @@ const Users = () => {
                 </TableCell>
               </TableRow>
             ))}
+            <TableRow>
+              <TableCell colSpan={4} align="center">
+                Total
+              </TableCell>
+              <TableCell colSpan={2}>{toralCredits} /-</TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
