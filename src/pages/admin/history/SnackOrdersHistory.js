@@ -16,6 +16,9 @@ import { useSelector } from 'react-redux';
 import { formatDate } from 'utils';
 import { getDebit } from '../users/Users';
 
+const sortDataByDate = data =>
+  [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
+
 const SnackOrdersHistory = ({ self }) => {
   const [data, setData] = useState([]);
   const { completedSnackOrders, loading, currentUserCompletedSnackOrders } =
@@ -26,8 +29,8 @@ const SnackOrdersHistory = ({ self }) => {
 
   useEffect(() => {
     self
-      ? setData(currentUserCompletedSnackOrders)
-      : setData(completedSnackOrders);
+      ? setData(sortDataByDate(currentUserCompletedSnackOrders))
+      : setData(sortDataByDate(completedSnackOrders));
   }, [completedSnackOrders, currentUserCompletedSnackOrders, self]);
 
   return (

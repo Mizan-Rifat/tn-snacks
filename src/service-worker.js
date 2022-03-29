@@ -69,6 +69,6 @@ self.addEventListener('message', event => {
     self.skipWaiting();
   }
 });
-console.log('v2.2.0');
+console.log('v2.3.0');
 
 // Any other custom service worker logic can go here.

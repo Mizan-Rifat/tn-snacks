@@ -35,7 +35,6 @@ export default function Items() {
         variant: 'error',
         description: 'Are you sure you want to cancel this order?'
       });
-      console.log(id);
       dispatch(deleteSnacksItem(id));
     } catch (error) {
       console.log('no');
