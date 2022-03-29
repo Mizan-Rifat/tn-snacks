@@ -88,10 +88,6 @@ const OrderList = () => {
     setGroupedUserOrders(groupBy(userOrders, 'uid'));
   }, [userOrders]);
 
-  useEffect(() => {
-    console.log({ groupedUserOrders });
-  }, [groupedUserOrders]);
-
   return snackOrder ? (
     <>
       <Box sx={{ textAlign: 'center', mb: 3 }}>
@@ -128,7 +124,7 @@ const OrderList = () => {
                     <IconButton
                       aria-label="delete"
                       size="small"
-                      onClick={() => handleDeleteOrder(row.id)}
+                      onClick={() => handleDeleteOrder(order.id)}
                     >
                       <CancelIcon fontSize="small" />
                     </IconButton>
