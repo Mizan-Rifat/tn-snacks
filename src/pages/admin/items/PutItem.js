@@ -31,7 +31,8 @@ const PutItem = () => {
       await dispatch(updateSnacksItem({ itemId, formData })).unwrap();
       navigate('/admin/items');
     } else {
-      dispatch(addSnacksItem({ formData, reset }));
+      await dispatch(addSnacksItem({ formData, reset }));
+      navigate('/admin/items');
     }
   };
   useEffect(() => {
@@ -46,6 +47,7 @@ const PutItem = () => {
   useEffect(() => {
     setValue('name', item.name);
     setValue('price', item.price);
+    setValue('category', item.category);
   }, [item]);
 
   return (
@@ -70,6 +72,16 @@ const PutItem = () => {
                 error={!!errors.price}
                 helperText={errors.price?.message}
                 {...register('price', { required: 'This field is required' })}
+              />
+              <TextField
+                fullWidth
+                label="Category"
+                type="number"
+                error={!!errors.category}
+                helperText={errors.category?.message}
+                {...register('category', {
+                  required: 'This field is required'
+                })}
               />
               <Button type="submit">{itemId ? 'Update' : 'Add'}</Button>
               <Button variant="outlined" component={Link} to="/admin/items">

@@ -31,13 +31,14 @@ const useOrdersHook = () => {
 
   const dispatch = useDispatch();
 
-  const handleDeleteOrder = async id => {
+  const handleDeleteOrder = async (id, itemId) => {
+    console.log({ id, itemId });
     try {
       await confirm({
         variant: 'error',
         description: 'Are you sure you want to cancel this order?'
       });
-      dispatch(deleteUserSnackOrder(id));
+      dispatch(deleteUserSnackOrder({ id, itemId }));
     } catch (error) {
       console.log('no');
     }

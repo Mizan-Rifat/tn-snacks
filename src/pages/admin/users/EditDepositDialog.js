@@ -10,7 +10,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { updateUserDeposit } from 'redux/slices/usersSlice';
 
-const EditDepositDialog = ({ open, setOpen, userId }) => {
+const EditDepositDialog = ({ open, setOpen, user }) => {
   const [value, setValue] = useState(0);
 
   const dispatch = useDispatch();
@@ -20,7 +20,9 @@ const EditDepositDialog = ({ open, setOpen, userId }) => {
   };
 
   const handleSubmit = () => {
-    dispatch(updateUserDeposit({ userId, deposit: value }));
+    const userId = user.id;
+    const deposit = Number(user.deposit) + Number(value);
+    dispatch(updateUserDeposit({ userId, deposit }));
     setOpen(false);
   };
 

@@ -124,7 +124,7 @@ const OrderList = () => {
                     <IconButton
                       aria-label="delete"
                       size="small"
-                      onClick={() => handleDeleteOrder(order.id)}
+                      onClick={() => handleDeleteOrder(order.id, order.itemId)}
                     >
                       <CancelIcon fontSize="small" />
                     </IconButton>
