@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import {
   Button,
@@ -20,6 +20,10 @@ const AddItemDialog = ({ open, setOpen }) => {
   const [qty, setQty] = useState(0);
 
   const { items } = useSelector(state => state.snackItems);
+  const [seletcAbleItems, setSeletcAbleItems] = useState([]);
+  const { currentUserOrders, snackOrder } = useSelector(
+    state => state.snackOrders
+  );
   const { currentUser } = useSelector(state => state.users);
   const dispatch = useDispatch();
 
@@ -35,13 +39,26 @@ const AddItemDialog = ({ open, setOpen }) => {
   const handleSubmit = () => {
     dispatch(
       addUserSnackOrder({
-        itemId: selectedItem.id,
-        qty,
-        uid: currentUser.id
+        formData: {
+          itemId: selectedItem.id,
+          qty,
+          uid: currentUser.id
+        },
+        category: selectedItem.category
       })
     );
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (snackOrder.categories?.length === 3) {
+      setSeletcAbleItems(
+        items.filter(item => snackOrder.categories.includes(item.category))
+      );
+    } else {
+      setSeletcAbleItems(items);
+    }
+  }, [snackOrder, items]);
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -56,11 +73,16 @@ const AddItemDialog = ({ open, setOpen }) => {
             label="Item"
             onChange={handleChange}
           >
-            {items.map(item => (
-              <MenuItem key={item.id} value={item}>
-                {item.name}
-              </MenuItem>
-            ))}
+            {seletcAbleItems
+              .filter(
+                item =>
+                  !currentUserOrders.some(order => order.itemId === item.id)
+              )
+              .map(item => (
+                <MenuItem key={item.id} value={item}>
+                  {item.name}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
 

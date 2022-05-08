@@ -61,6 +61,7 @@ export default function Items() {
               <TableCell>#</TableCell>
               <TableCell>Item</TableCell>
               <TableCell align="center">Price</TableCell>
+              <TableCell align="center">Category</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
@@ -71,6 +72,7 @@ export default function Items() {
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell align="center">{row.price} /-</TableCell>
+                <TableCell align="center">{row.category}</TableCell>
                 <TableCell align="right">
                   <IconButton
                     aria-label="delete"

@@ -17,9 +17,9 @@ const getTotalPrice = items =>
 
 const Home = () => {
   const [open, setOpen] = useState();
-  const { currentUserOrders } = useSelector(state => state.snackOrders);
-
-  const { snackOrder } = useSelector(state => state.snackOrders);
+  const { currentUserOrders, snackOrder } = useSelector(
+    state => state.snackOrders
+  );
 
   const { handleDeleteOrder } = useOrdersHook();
 
@@ -38,7 +38,7 @@ const Home = () => {
                   <IconButton
                     aria-label="delete"
                     size="small"
-                    onClick={() => handleDeleteOrder(row.id)}
+                    onClick={() => handleDeleteOrder(row.id, row.itemId)}
                     disabled={!snackOrder.open}
                   >
                     <CancelIcon fontSize="small" />

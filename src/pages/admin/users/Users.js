@@ -25,7 +25,7 @@ export const getDebit = (user, orders) =>
 const Users = () => {
   const usersRef = collection(db, 'users');
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [toralCredits, setTotalCredits] = useState(0);
 
   const { users, loading } = useSelector(state => state.users);
@@ -92,7 +92,7 @@ const Users = () => {
                     aria-label="delete"
                     size="small"
                     onClick={() => {
-                      setSelectedUserId(row.id);
+                      setSelectedUser(row);
                       setOpenDialog(true);
                     }}
                   >
@@ -113,7 +113,7 @@ const Users = () => {
       <EditDepositDialog
         open={openDialog}
         setOpen={setOpenDialog}
-        userId={selectedUserId}
+        user={selectedUser}
       />
     </>
   );

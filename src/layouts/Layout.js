@@ -59,8 +59,8 @@ const Layout = props => {
           <Typography variant="h6" noWrap component="div">
             TN Snacks
           </Typography>
-          <Typography variant="body" noWrap component="div" sx={{ ml: 1 }}>
-            v1.2.3
+          <Typography variant="body2" noWrap component="div" sx={{ ml: 1 }}>
+            v2.4.0
           </Typography>
           <Box sx={{ ml: 'auto' }}>
             <IconButton size="large" onClick={handleMenu} color="inherit">
