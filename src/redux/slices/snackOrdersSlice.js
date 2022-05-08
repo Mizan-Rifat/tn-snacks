@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   addDoc,
+  arrayRemove,
+  arrayUnion,
   collection,
   deleteDoc,
   doc,
@@ -47,14 +49,23 @@ export const addSnackOrder = createAsyncThunk(
 
 export const addUserSnackOrder = createAsyncThunk(
   'sanck_orders/add_user_order',
-  async (data, { getState }) => {
+  async ({ formData, category }, { getState }) => {
     const snackUsersOrderRef = collection(
       db,
       getSnackUsersOrderRef(getState().snackOrders.snackOrder.id)
     );
-    try {
-      const item = await addDoc(snackUsersOrderRef, data);
+    const snackOrderRef = doc(
+      db,
+      'snackOrders',
+      getState().snackOrders.snackOrder.id
+    );
 
+    try {
+      const item = await addDoc(snackUsersOrderRef, formData);
+
+      await updateDoc(snackOrderRef, {
+        categories: arrayUnion(category)
+      });
       toast.success('Successfully created.');
       return item;
     } catch (error) {
@@ -81,15 +92,33 @@ export const updateUserSnackOrder = createAsyncThunk(
 
 export const deleteUserSnackOrder = createAsyncThunk(
   'sanck_orders/delete_user_order',
-  async (id, { getState }) => {
+  async ({ id, itemId }, { getState }) => {
     const snackUsersOrderRef = doc(
       db,
       getSnackUsersOrderRef(getState().snackOrders.snackOrder.id),
       id
     );
 
+    const category = getState().snackItems.items.find(
+      item => item.id === itemId
+    ).category;
+
+    const snackOrderRef = doc(
+      db,
+      'snackOrders',
+      getState().snackOrders.snackOrder.id
+    );
+
     try {
       const item = await deleteDoc(snackUsersOrderRef);
+
+      const userOrders = getState().snackOrders.userOrders;
+
+      if (!userOrders.some(order => order.category === category)) {
+        await updateDoc(snackOrderRef, {
+          categories: arrayRemove(category)
+        });
+      }
       toast.success('Successfully deleted.');
       return item;
     } catch (error) {
