@@ -21,7 +21,7 @@ const EditDepositDialog = ({ open, setOpen, user }) => {
 
   const handleSubmit = () => {
     const userId = user.id;
-    const deposit = Number(user.deposit) + Number(value);
+    const deposit = Number(user.deposit || 0) + Number(value);
     dispatch(updateUserDeposit({ userId, deposit }));
     setOpen(false);
   };

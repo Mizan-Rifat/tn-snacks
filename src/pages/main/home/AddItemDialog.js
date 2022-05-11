@@ -74,6 +74,7 @@ const AddItemDialog = ({ open, setOpen }) => {
             onChange={handleChange}
           >
             {seletcAbleItems
+              .filter(item => !item.disable)
               .filter(
                 item =>
                   !currentUserOrders.some(order => order.itemId === item.id)

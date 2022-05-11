@@ -32,7 +32,6 @@ const useOrdersHook = () => {
   const dispatch = useDispatch();
 
   const handleDeleteOrder = async (id, itemId) => {
-    console.log({ id, itemId });
     try {
       await confirm({
         variant: 'error',

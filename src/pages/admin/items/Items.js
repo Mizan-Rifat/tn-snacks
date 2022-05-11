@@ -62,6 +62,7 @@ export default function Items() {
               <TableCell>Item</TableCell>
               <TableCell align="center">Price</TableCell>
               <TableCell align="center">Category</TableCell>
+              <TableCell align="center">Disable</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
@@ -73,6 +74,9 @@ export default function Items() {
                 <TableCell>{row.name}</TableCell>
                 <TableCell align="center">{row.price} /-</TableCell>
                 <TableCell align="center">{row.category}</TableCell>
+                <TableCell align="center">
+                  {row.disable ? 'Yes' : 'No'}
+                </TableCell>
                 <TableCell align="right">
                   <IconButton
                     aria-label="delete"

@@ -1,4 +1,10 @@
-import { Button, Stack, TextField } from '@mui/material';
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Stack,
+  TextField
+} from '@mui/material';
 import AppBackdrop from 'components/backdrop/AppBackdrop';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -48,6 +54,7 @@ const PutItem = () => {
     setValue('name', item.name);
     setValue('price', item.price);
     setValue('category', item.category);
+    setValue('disable', item.disable);
   }, [item]);
 
   return (
@@ -82,6 +89,18 @@ const PutItem = () => {
                 {...register('category', {
                   required: 'This field is required'
                 })}
+              />
+              <FormControlLabel
+                sx={{ flexDirection: 'row' }}
+                control={
+                  <Checkbox
+                    defaultChecked={item.disable}
+                    {...register('disable')}
+                    sx={{ pl: 0, py: 0 }}
+                  />
+                }
+                label="Disable"
+                labelPlacement="start"
               />
               <Button type="submit">{itemId ? 'Update' : 'Add'}</Button>
               <Button variant="outlined" component={Link} to="/admin/items">
