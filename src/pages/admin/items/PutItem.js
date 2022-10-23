@@ -54,7 +54,7 @@ const PutItem = () => {
     setValue('name', item.name);
     setValue('price', item.price);
     setValue('category', item.category);
-    setValue('disable', item.disable);
+    setValue('disable', item.disable || false);
   }, [item]);
 
   return (
