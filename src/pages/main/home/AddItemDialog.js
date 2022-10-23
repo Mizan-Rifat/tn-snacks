@@ -14,18 +14,24 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserSnackOrder } from 'redux/slices/snackOrdersSlice';
+import { getDebit } from 'pages/admin/users/Users';
+import useSnackOrdersHistory from 'hooks/useSnackOrderHistory';
+import { toast } from 'react-toastify';
 
 const AddItemDialog = ({ open, setOpen }) => {
   const [selectedItem, setSelectedItem] = useState({});
+  const [credit, setCredit] = useState(0);
   const [qty, setQty] = useState(0);
 
   const { items } = useSelector(state => state.snackItems);
   const [seletcAbleItems, setSeletcAbleItems] = useState([]);
-  const { currentUserOrders, snackOrder } = useSelector(
-    state => state.snackOrders
-  );
+  const { currentUserOrders, snackOrder, currentUserCompletedSnackOrders } =
+    useSelector(state => state.snackOrders);
+
   const { currentUser } = useSelector(state => state.users);
   const dispatch = useDispatch();
+
+  useSnackOrdersHistory();
 
   const handleClose = () => {
     setOpen(false);
@@ -37,16 +43,26 @@ const AddItemDialog = ({ open, setOpen }) => {
   };
 
   const handleSubmit = () => {
-    dispatch(
-      addUserSnackOrder({
-        formData: {
-          itemId: selectedItem.id,
-          qty,
-          uid: currentUser.id
-        },
-        category: selectedItem.category
-      })
+    const spent = currentUserOrders.reduce(
+      (pv, cv) => pv + parseInt(cv.price * cv.qty),
+      0
     );
+
+    if (spent + parseInt(selectedItem.price) > credit) {
+      toast.error("You don't have enough credit");
+    } else {
+      dispatch(
+        addUserSnackOrder({
+          formData: {
+            itemId: selectedItem.id,
+            qty,
+            uid: currentUser.id
+          },
+          category: selectedItem.category
+        })
+      );
+    }
+
     setOpen(false);
   };
 
@@ -59,6 +75,13 @@ const AddItemDialog = ({ open, setOpen }) => {
       setSeletcAbleItems(items);
     }
   }, [snackOrder, items]);
+
+  useEffect(() => {
+    setCredit(
+      currentUser.deposit -
+        getDebit(currentUser.id, currentUserCompletedSnackOrders)
+    );
+  }, [currentUserCompletedSnackOrders]);
 
   return (
     <Dialog open={open} onClose={handleClose}>
