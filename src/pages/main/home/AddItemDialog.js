@@ -48,7 +48,7 @@ const AddItemDialog = ({ open, setOpen }) => {
       0
     );
 
-    if (spent + parseInt(selectedItem.price) > credit) {
+    if (spent + parseInt(selectedItem.price) * parseInt(qty) > credit) {
       toast.error("You don't have enough credit");
     } else {
       dispatch(
