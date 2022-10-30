@@ -1,6 +1,6 @@
 {
   "name": "tn-snacks",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "homepage": "https://mizan-rifat.github.io/tn-sancks/",
   "dependencies": {
     "@emotion/react": "^11.8.2",

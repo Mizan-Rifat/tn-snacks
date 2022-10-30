@@ -60,7 +60,7 @@ const Layout = props => {
             TN Snacks
           </Typography>
           <Typography variant="body2" noWrap component="div" sx={{ ml: 1 }}>
-            v2.6.0
+            v2.6.2
           </Typography>
           <Box sx={{ ml: 'auto' }}>
             <IconButton size="large" onClick={handleMenu} color="inherit">
