@@ -49,13 +49,23 @@ const Sidebar = ({ mobileOpen, setMobileOpen }) => {
               icon: <RestaurantMenuIcon />
             },
             {
+              title: 'Lunch Orders History',
+              to: '/orders/lunch/history',
+              icon: <RestaurantMenuIcon />
+            },
+            {
               title: 'My Order',
               to: '/',
               icon: <PersonIcon />
             },
             {
-              title: 'My Order History',
+              title: 'My Snack Order History',
               to: '/orders/history/self',
+              icon: <PersonIcon />
+            },
+            {
+              title: 'My Lunch Order History',
+              to: '/orders/lunch/history/self',
               icon: <PersonIcon />
             }
           ]

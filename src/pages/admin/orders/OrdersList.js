@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
 import { Box } from '@mui/system';
-import { Button, Divider, Stack } from '@mui/material';
+import { Button, Divider, Stack, Tab, Tabs } from '@mui/material';
 import useOrdersHook from 'hooks/useOrdersHooks';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -19,6 +19,9 @@ import {
 import { Navigate } from 'react-router-dom';
 import { formatDate, getTotal, groupBy } from 'utils';
 import { useConfirmation } from 'providers/ConfirmationProvider';
+import TabPanel from 'components/common/TabPanel';
+import Snack from './Snack';
+import Lunch from './Lunch';
 
 const getSumOfOrders = data => {
   const groupedData = data.reduce((acc, val) => {
@@ -33,6 +36,12 @@ const getSumOfOrders = data => {
   }));
 };
 const OrderList = () => {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const [groupedUserOrders, setGroupedUserOrders] = useState({});
   const { snackOrder, userOrders } = useSelector(state => state.snackOrders);
   const { handleDeleteOrder } = useOrdersHook();
@@ -94,91 +103,17 @@ const OrderList = () => {
         <h3>{formatDate(snackOrder.date, true)}</h3>
         <Divider variant="middle" />
       </Box>
-      <TableContainer component={Paper}>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Item</TableCell>
-              <TableCell align="center">Qty.</TableCell>
-              <TableCell align="center">Cost</TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
-          </TableHead>
 
-          <TableBody>
-            {Object.keys(groupedUserOrders).map(row =>
-              groupedUserOrders[row].map((order, index) => (
-                <TableRow key={index}>
-                  {index === 0 && (
-                    <TableCell rowSpan={groupedUserOrders[row].length}>
-                      {order.user}
-                    </TableCell>
-                  )}
-                  <TableCell>{order.name}</TableCell>
-                  <TableCell align="center">{order.qty}</TableCell>
-                  <TableCell align="center">
-                    {order.price * order.qty} /-
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      aria-label="delete"
-                      size="small"
-                      onClick={() => handleDeleteOrder(order.id, order.itemId)}
-                    >
-                      <CancelIcon fontSize="small" />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-
-            <TableRow>
-              <TableCell
-                align="center"
-                colSpan={5}
-                sx={{ borderBottom: 'none', pt: 3, fontWeight: 700 }}
-              >
-                Total Orders
-              </TableCell>
-            </TableRow>
-
-            {getSumOfOrders(userOrders).map(row => (
-              <TableRow key={row.name}>
-                <TableCell sx={{ borderBottom: 'none' }}></TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell align="center">{row.qty}</TableCell>
-                <TableCell align="center">{row.price} /-</TableCell>
-              </TableRow>
-            ))}
-
-            <TableRow>
-              <TableCell colSpan={2} sx={{ borderBottom: 'none' }}></TableCell>
-              <TableCell sx={{ borderBottom: 'none' }}>Total :</TableCell>
-              <TableCell align="center" sx={{ borderBottom: 'none' }}>
-                {getTotal(getSumOfOrders(userOrders), 'price')} /-
-              </TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell colSpan={5} sx={{ borderBottom: 'none', pt: 2 }} />
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      <Stack spacing={1} sx={{ px: 6, py: 4 }}>
-        <Button
-          variant="outlined"
-          color={snackOrder.open ? 'error' : 'primary'}
-          onClick={toggleOrderOpen}
-        >
-          {snackOrder.open ? 'Stop' : 'Start'} taking orders
-        </Button>
-        <Button variant="contained" color="primary" onClick={completeOrder}>
-          Mark order as complete
-        </Button>
-      </Stack>
+      <Tabs value={value} onChange={handleChange} centered sx={{ mb: 2 }}>
+        <Tab label="Snacks" />
+        <Tab label="Lunch" />
+      </Tabs>
+      <TabPanel value={value} index={0}>
+        <Snack />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <Lunch />
+      </TabPanel>
     </>
   ) : (
     <Navigate to="/admin" />

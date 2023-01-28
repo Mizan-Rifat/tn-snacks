@@ -39,7 +39,7 @@ export const updateUserDeposit = createAsyncThunk(
 );
 
 export const usersSlice = createSlice({
-  name: 'snackItems',
+  name: 'users',
   initialState: {
     users: [],
     currentUser: {},

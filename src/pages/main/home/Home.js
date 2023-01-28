@@ -1,86 +1,28 @@
-import React, { useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import CancelIcon from '@mui/icons-material/Cancel';
-import IconButton from '@mui/material/IconButton';
-import { Box, Button } from '@mui/material';
-import { useSelector } from 'react-redux';
-import AddItemDialog from './AddItemDialog';
-import useOrdersHook from 'hooks/useOrdersHooks';
-import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-
-const getTotalPrice = items =>
-  items.reduce((acc, val) => acc + Number(val.qty * val.price), 0);
+import React from 'react';
+import { Tab, Tabs } from '@mui/material';
+import Snack from './Snack';
+import Lunch from './Lunch';
+import TabPanel from 'components/common/TabPanel';
 
 const Home = () => {
-  const [open, setOpen] = useState();
-  const { currentUserOrders, snackOrder } = useSelector(
-    state => state.snackOrders
-  );
+  const [value, setValue] = React.useState(0);
 
-  const { handleDeleteOrder } = useOrdersHook();
-
-  return snackOrder ? (
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  return (
     <>
-      <TableContainer>
-        <Table size="small">
-          <TableBody>
-            {currentUserOrders.map(row => (
-              <TableRow key={row.itemId}>
-                <TableCell>
-                  {row.name} ({row.qty})
-                </TableCell>
-                <TableCell>{row.price * row.qty} /-</TableCell>
-                <TableCell align="right">
-                  <IconButton
-                    aria-label="delete"
-                    size="small"
-                    onClick={() => handleDeleteOrder(row.id, row.itemId)}
-                    disabled={!snackOrder.open}
-                  >
-                    <CancelIcon fontSize="small" />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-
-            <TableRow>
-              <TableCell>Total</TableCell>
-              <TableCell>{getTotalPrice(currentUserOrders)} /-</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Box sx={{ textAlign: 'center', my: 3 }}>
-        {!snackOrder.open && <h3>Order request is closed now.</h3>}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setOpen(true)}
-          disabled={!snackOrder.open}
-        >
-          Add Item
-        </Button>
-      </Box>
-      <AddItemDialog open={open} setOpen={setOpen} />
+      <Tabs value={value} onChange={handleChange} centered>
+        <Tab label="Snacks" />
+        <Tab label="Lunch" />
+      </Tabs>
+      <TabPanel value={value} index={0}>
+        <Snack />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <Lunch />
+      </TabPanel>
     </>
-  ) : (
-    <Box
-      sx={{
-        minHeight: 300,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column'
-      }}
-    >
-      <SentimentVeryDissatisfiedIcon />
-      <h3>No order request is available right now</h3>
-    </Box>
   );
 };
 
