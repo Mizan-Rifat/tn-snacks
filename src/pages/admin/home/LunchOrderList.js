@@ -1,16 +1,4 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
-} from '@mui/material';
+import { Box, Button, Divider, Stack } from '@mui/material';
 import LunchOrdersTable from 'components/common/LunchOrdersTable';
 import dayjs from 'dayjs';
 import { useConfirmation } from 'providers/ConfirmationProvider';
@@ -22,20 +10,12 @@ import {
   updateLunchOrder
 } from 'redux/slices/lunchOrderSlice';
 
-const data = [
-  {
-    id: 1,
-    user: 'Rifat',
-    price: 90
-  }
-];
-
 const LunchOrderList = () => {
   const confirm = useConfirmation();
 
   const dispatch = useDispatch();
   const { lunchOrder } = useSelector(state => state.lunchOrders);
-  const { currentUser, users } = useSelector(state => state.users);
+  const { users } = useSelector(state => state.users);
 
   const toggleOrderOpen = async () => {
     try {
@@ -83,6 +63,10 @@ const LunchOrderList = () => {
 
   return (
     <div>
+      <Box sx={{ textAlign: 'center', mb: 3 }}>
+        <h3>{dayjs(lunchOrder.date).format('DD MMM, YYYY')}</h3>
+        <Divider variant="middle" />
+      </Box>
       <LunchOrdersTable />
       <Stack spacing={1} sx={{ px: 6, py: 4 }}>
         <Button

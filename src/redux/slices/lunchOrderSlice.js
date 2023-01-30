@@ -44,7 +44,7 @@ export const updateLunchOrder = createAsyncThunk(
 
 export const addUserLunchOrder = createAsyncThunk(
   'lunch_orders/add_user_order',
-  async ({ id, userId, add }, { getState }) => {
+  async ({ id, userId, add }) => {
     const docRef = doc(db, 'lunchOrders', id);
 
     try {
@@ -79,6 +79,21 @@ export const completeLunchOrders = createAsyncThunk(
         getState().lunchOrders.lunchOrder.id
       );
       await updateDoc(docRef, { status: false, open: false });
+    } catch (error) {
+      console.log({ error });
+    }
+  }
+);
+
+export const deleteCompleteLunchOrders = createAsyncThunk(
+  'lunch_items/delete_completed_item',
+  async items => {
+    try {
+      items.forEach(async item => {
+        const docRef = doc(db, 'completedLunchOrders', item);
+        await deleteDoc(docRef);
+      });
+      toast.success('Successfully deleted');
     } catch (error) {
       console.log({ error });
     }

@@ -44,7 +44,7 @@ const MyLunchHistory = () => {
             {orders.map(row => (
               <TableRow key={row.id}>
                 <TableCell>{dayjs(row.date).format('DD MMM, YYYY')}</TableCell>
-                <TableCell align="center">{row.userName} /-</TableCell>
+                {/* <TableCell align="center">{row.userName} /-</TableCell> */}
                 <TableCell align="center">{row.price} /-</TableCell>
               </TableRow>
             ))}
