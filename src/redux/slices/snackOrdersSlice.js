@@ -153,6 +153,11 @@ export const snackOrdersSlice = createSlice({
     loading: true
   },
   reducers: {
+    setSnackOrderState: (state, { payload }) => {
+      Object.keys(payload).forEach(item => {
+        state[item] = payload[item];
+      });
+    },
     setLoadingTrue: state => {
       state.loading = true;
     },
