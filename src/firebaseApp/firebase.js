@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
-//live
+// live;
 const firebaseConfig = {
   apiKey: 'AIzaSyD0j4pHa5i6pbPL2QpSSUo3peTGLNMsxzw',
   authDomain: 'tn-snacks.firebaseapp.com',

@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Button, Tab, Tabs } from '@mui/material';
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -9,10 +9,13 @@ import dayjs from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
 import useOrdersHook from 'hooks/useOrdersHooks';
 import AppBackdrop from 'components/backdrop/AppBackdrop';
-import { Navigate } from 'react-router-dom';
 import { addSnackOrder } from 'redux/slices/snackOrdersSlice';
+import { addLunchOrder } from 'redux/slices/lunchOrderSlice';
+import TabPanel from 'components/common/TabPanel';
+import Snack from './Snack';
+import Lunch from './Lunch';
 
-const FormDialog = ({ open, setOpen }) => {
+export const FormDialog = ({ open, setOpen, type }) => {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const dispatch = useDispatch();
 
@@ -21,9 +24,14 @@ const FormDialog = ({ open, setOpen }) => {
   };
 
   const handleSubmit = () => {
-    dispatch(
-      addSnackOrder({ date: dayjs(date).format(), status: true, open: true })
-    );
+    if (type === 'snack')
+      dispatch(
+        addSnackOrder({ date: dayjs(date).format(), status: true, open: true })
+      );
+    if (type === 'lunch')
+      dispatch(
+        addLunchOrder({ date: dayjs(date).format(), status: true, open: true })
+      );
 
     setOpen(false);
   };
@@ -54,9 +62,13 @@ const FormDialog = ({ open, setOpen }) => {
 };
 
 const AdminHome = () => {
-  const [open, setOpen] = useState(false);
+  const [value, setValue] = React.useState(0);
 
-  const { snackOrder, loading } = useSelector(state => state.snackOrders);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const { loading } = useSelector(state => state.snackOrders);
 
   useOrdersHook();
 
@@ -64,29 +76,16 @@ const AdminHome = () => {
     !loading && (
       <>
         <AppBackdrop open={loading} />
-        {snackOrder ? (
-          <Navigate to="orders" />
-        ) : (
-          <>
-            <Box
-              sx={{
-                display: 'flex',
-                height: '70vh',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setOpen(true)}
-              >
-                Start taking orders
-              </Button>
-            </Box>
-            <FormDialog open={open} setOpen={setOpen} />
-          </>
-        )}
+        <Tabs value={value} onChange={handleChange} centered sx={{ mb: 2 }}>
+          <Tab label="Snacks" />
+          <Tab label="Lunch" />
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          <Snack />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Lunch />
+        </TabPanel>
       </>
     )
   );

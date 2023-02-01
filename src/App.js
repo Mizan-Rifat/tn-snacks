@@ -22,6 +22,8 @@ import SnackOrdersHistory from 'pages/admin/history/SnackOrdersHistory';
 import AuthProtectedRoute from 'components/auth/AuthProtectedRoute';
 import AdminProtectedRoute from 'components/auth/AdminProtectedRoute';
 import Register from 'pages/Register';
+import LunchOrderHistory from 'pages/admin/history/LunchOrderHistory';
+import MyLunchHistory from 'pages/main/history/MyLunchHistory';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -57,8 +59,16 @@ const App = () => {
                       element={<SnackOrdersHistory />}
                     />
                     <Route
+                      path="orders/lunch/history"
+                      element={<LunchOrderHistory />}
+                    />
+                    <Route
                       path="orders/history/self"
                       element={<SnackOrdersHistory self={true} />}
+                    />
+                    <Route
+                      path="orders/lunch/history/self"
+                      element={<MyLunchHistory />}
                     />
                     <Route element={<AdminProtectedRoute />}>
                       <Route path="admin" element={<AdminHome />} />

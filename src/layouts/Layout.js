@@ -14,7 +14,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from 'firebaseApp/firebase';
 import Sidebar from './Sidebar';
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const Layout = props => {
   const { window } = props;
@@ -60,7 +60,7 @@ const Layout = props => {
             TN Snacks
           </Typography>
           <Typography variant="body2" noWrap component="div" sx={{ ml: 1 }}>
-            v2.6.2
+            v3.0.0
           </Typography>
           <Box sx={{ ml: 'auto' }}>
             <IconButton size="large" onClick={handleMenu} color="inherit">
