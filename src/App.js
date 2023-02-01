@@ -46,7 +46,7 @@ const App = () => {
         <ConfirmationProvider>
           <CssBaseline />
           {!loading && (
-            <BrowserRouter basename="/tn-snacks">
+            <BrowserRouter basename="/tn-sancks">
               <Routes>
                 <Route path="/" element={<Layout />}>
                   <Route path="login" element={<Login />} />

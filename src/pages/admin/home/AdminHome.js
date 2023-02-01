@@ -1,4 +1,4 @@
-import { Box, Button, Tab, Tabs } from '@mui/material';
+import { Button, Tab, Tabs } from '@mui/material';
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -9,7 +9,6 @@ import dayjs from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
 import useOrdersHook from 'hooks/useOrdersHooks';
 import AppBackdrop from 'components/backdrop/AppBackdrop';
-import { Navigate } from 'react-router-dom';
 import { addSnackOrder } from 'redux/slices/snackOrdersSlice';
 import { addLunchOrder } from 'redux/slices/lunchOrderSlice';
 import TabPanel from 'components/common/TabPanel';
@@ -63,16 +62,13 @@ export const FormDialog = ({ open, setOpen, type }) => {
 };
 
 const AdminHome = () => {
-  const [open, setOpen] = useState(false);
-  const [type, setType] = useState('snacks');
-
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const { snackOrder, loading } = useSelector(state => state.snackOrders);
+  const { loading } = useSelector(state => state.snackOrders);
 
   useOrdersHook();
 

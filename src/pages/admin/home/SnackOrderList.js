@@ -8,8 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
-import { Box } from '@mui/system';
-import { Button, Divider, Stack, Tab, Tabs } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import useOrdersHook from 'hooks/useOrdersHooks';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -17,9 +16,8 @@ import {
   updateSnackOrder
 } from 'redux/slices/snackOrdersSlice';
 import { Navigate } from 'react-router-dom';
-import { formatDate, getTotal, groupBy } from 'utils';
+import { getTotal, groupBy } from 'utils';
 import { useConfirmation } from 'providers/ConfirmationProvider';
-import TabPanel from 'components/common/TabPanel';
 
 const getSumOfOrders = data => {
   const groupedData = data.reduce((acc, val) => {
