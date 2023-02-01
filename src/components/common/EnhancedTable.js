@@ -57,7 +57,12 @@ function EnhancedTableHead(props) {
   );
 }
 
-function EnhancedTableToolbar({ selected, setOrders, completedLunchOrders }) {
+function EnhancedTableToolbar({
+  selected,
+  setSelected,
+  setOrders,
+  completedLunchOrders
+}) {
   const [date, setDate] = useState('');
   const [user, setUser] = useState('');
   const [month, setMonth] = useState('');
@@ -99,6 +104,7 @@ function EnhancedTableToolbar({ selected, setOrders, completedLunchOrders }) {
         description: 'Are you sure you want to delete this rows?'
       });
       dispatch(deleteCompleteLunchOrders(selected));
+      setSelected([]);
     } catch (error) {
       console.log('no');
     }
@@ -270,6 +276,7 @@ export default function EnhancedTable({
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar
           selected={selected}
+          setSelected={setSelected}
           setOrders={setOrders}
           completedLunchOrders={completedLunchOrders}
         />

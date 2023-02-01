@@ -70,7 +70,7 @@ export const completeLunchOrders = createAsyncThunk(
   'lunch_orders/complete_order',
   async (orders, { getState }) => {
     try {
-      orders.forEach(async order => {
+      orders?.forEach(async order => {
         await addDoc(completedLunchOrdersRef, order);
       });
       const docRef = doc(

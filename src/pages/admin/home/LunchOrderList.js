@@ -44,17 +44,15 @@ const LunchOrderList = () => {
         variant: 'error',
         description: 'Are you sure you want to mark this order as complete?'
       });
-      const data = lunchOrder.users?.map(item => {
+      const data = lunchOrder?.users?.map(item => {
         const user = users.find(user => user.id === item);
         return {
-          date: lunchOrder.date,
+          date: lunchOrder?.date,
           userName: user.name,
           price: 90,
           userId: item
         };
       });
-      console.log({ data });
-
       await dispatch(completeLunchOrders(data)).unwarp();
     } catch (error) {
       console.log('no');
@@ -64,7 +62,7 @@ const LunchOrderList = () => {
   return (
     <div>
       <Box sx={{ textAlign: 'center', mb: 3 }}>
-        <h3>{dayjs(lunchOrder.date).format('DD MMM, YYYY')}</h3>
+        <h3>{dayjs(lunchOrder?.date).format('DD MMM, YYYY')}</h3>
         <Divider variant="middle" />
       </Box>
       <LunchOrdersTable />
@@ -74,7 +72,7 @@ const LunchOrderList = () => {
           color={lunchOrder.open ? 'error' : 'primary'}
           onClick={toggleOrderOpen}
         >
-          {lunchOrder.open ? 'Stop' : 'Start'} taking orders
+          {lunchOrder?.open ? 'Stop' : 'Start'} taking orders
         </Button>
         <Button variant="contained" color="primary" onClick={completeOrder}>
           Mark order as complete

@@ -26,7 +26,7 @@ const LunchOrdersTable = () => {
         </TableHead>
 
         <TableBody>
-          {lunchOrder.users
+          {lunchOrder?.users
             ?.map(item => users.find(user => user.id === item))
             .map(row => (
               <TableRow key={row.id}>

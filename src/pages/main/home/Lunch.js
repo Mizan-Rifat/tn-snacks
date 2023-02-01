@@ -1,29 +1,10 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
-} from '@mui/material';
+import { Box, Button, Divider } from '@mui/material';
 import LunchOrdersTable from 'components/common/LunchOrdersTable';
 import dayjs from 'dayjs';
 import { useConfirmation } from 'providers/ConfirmationProvider';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserLunchOrder } from 'redux/slices/lunchOrderSlice';
-
-const data = [
-  {
-    id: 1,
-    user: 'Rifat',
-    price: 90
-  }
-];
 
 const Lunch = () => {
   const confirm = useConfirmation();
@@ -42,7 +23,7 @@ const Lunch = () => {
       });
       await dispatch(
         addUserLunchOrder({
-          id: lunchOrder.id,
+          id: lunchOrder?.id,
           userId: currentUser.id,
           add
         })
@@ -62,13 +43,13 @@ const Lunch = () => {
       <LunchOrdersTable />
 
       <Box sx={{ textAlign: 'center' }}>
-        {!lunchOrder.open && <h3>Order request is closed now.</h3>}
-        {lunchOrder.users?.includes(currentUser.id) ? (
+        {!lunchOrder?.open && <h3>Order request is closed now.</h3>}
+        {lunchOrder?.users?.includes(currentUser.id) ? (
           <Button
             variant="contained"
             color="error"
             onClick={() => placeOrder()}
-            disabled={!lunchOrder.open}
+            disabled={!lunchOrder?.open}
           >
             cancel order
           </Button>
@@ -77,7 +58,7 @@ const Lunch = () => {
             variant="contained"
             color="primary"
             onClick={() => placeOrder(true)}
-            disabled={!lunchOrder.open}
+            disabled={!lunchOrder?.open}
           >
             Place order
           </Button>
