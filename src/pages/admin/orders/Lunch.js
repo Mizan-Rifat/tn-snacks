@@ -1,7 +1,5 @@
 import {
-  Box,
   Button,
-  Divider,
   Paper,
   Stack,
   Table,
@@ -11,8 +9,6 @@ import {
   TableHead,
   TableRow
 } from '@mui/material';
-import dayjs from 'dayjs';
-import { useConfirmation } from 'providers/ConfirmationProvider';
 import React from 'react';
 
 const data = [
@@ -24,30 +20,6 @@ const data = [
 ];
 
 const Lunch = () => {
-  const confirm = useConfirmation();
-
-  const placeOrder = async () => {
-    try {
-      await confirm({
-        variant: 'error',
-        description: 'Are you sure you want to place an order?'
-      });
-      const data = userOrders.map(order => ({
-        date: snackOrder.date,
-        itemId: order.itemId,
-        itemName: order.name,
-        itemPrice: order.price,
-        totalPrice: order.price * order.qty,
-        qty: order.qty,
-        userName: order.user,
-        userId: order.uid
-      }));
-
-      await dispatch(completeSnackOrders(data)).unwarp();
-    } catch (error) {
-      console.log('no');
-    }
-  };
   return (
     <div>
       <TableContainer component={Paper} sx={{ mb: 2 }}>
@@ -70,13 +42,7 @@ const Lunch = () => {
         </Table>
       </TableContainer>
       <Stack spacing={1} sx={{ px: 6, py: 4 }}>
-        <Button
-          variant="outlined"
-          // color={snackOrder.open ? 'error' : 'primary'}
-          // onClick={toggleOrderOpen}
-        >
-          Start taking orders
-        </Button>
+        <Button variant="outlined">Start taking orders</Button>
         <Button variant="contained" color="primary">
           Mark order as complete
         </Button>
