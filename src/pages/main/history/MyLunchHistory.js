@@ -35,21 +35,23 @@ const MyLunchHistory = () => {
         <Table size="small" aria-label="spanning table">
           <TableHead>
             <TableRow>
+              <TableCell>#</TableCell>
               <TableCell>Date</TableCell>
               <TableCell align="center">Cost</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {orders.map(row => (
+            {orders.map((row, index) => (
               <TableRow key={row.id}>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{dayjs(row.date).format('DD MMM, YYYY')}</TableCell>
-                {/* <TableCell align="center">{row.userName} /-</TableCell> */}
                 <TableCell align="center">{row.price} /-</TableCell>
               </TableRow>
             ))}
 
             <TableRow>
+              <TableCell />
               <TableCell />
               <TableCell align="center">{getTotalPrice(orders)} /-</TableCell>
             </TableRow>

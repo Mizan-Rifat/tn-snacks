@@ -44,15 +44,17 @@ const LunchOrderList = () => {
         variant: 'error',
         description: 'Are you sure you want to mark this order as complete?'
       });
-      const data = lunchOrder?.users?.map(item => {
-        const user = users.find(user => user.id === item);
-        return {
-          date: lunchOrder?.date,
-          userName: user.name,
-          price: 90,
-          userId: item
-        };
-      });
+      const data = lunchOrder?.users
+        ?.map(user => user.split('_')[0])
+        ?.map(item => {
+          const user = users.find(user => user.id === item);
+          return {
+            date: lunchOrder?.date,
+            userName: user.name,
+            price: 90,
+            userId: item
+          };
+        });
       await dispatch(completeLunchOrders(data)).unwarp();
     } catch (error) {
       console.log('no');
