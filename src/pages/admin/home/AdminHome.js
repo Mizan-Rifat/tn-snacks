@@ -1,4 +1,13 @@
-import { Button, Tab, Tabs } from '@mui/material';
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+  Tab,
+  Tabs
+} from '@mui/material';
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -19,27 +28,45 @@ export const FormDialog = ({ open, setOpen, type }) => {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const dispatch = useDispatch();
 
+  const [lunchItem, setLunchItem] = React.useState([]);
+
+  const handleChange = ({ target }) => {
+    if (target.checked) {
+      setLunchItem([...lunchItem, target.name]);
+    } else {
+      setLunchItem(lunchItem.filter(item => item !== target.name));
+    }
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleSubmit = () => {
-    if (type === 'snack')
+    if (type === 'snack') {
       dispatch(
         addSnackOrder({ date: dayjs(date).format(), status: true, open: true })
       );
-    if (type === 'lunch')
+    }
+    if (type === 'lunch') {
+      console.log({ lunchItem });
       dispatch(
-        addLunchOrder({ date: dayjs(date).format(), status: true, open: true })
+        addLunchOrder({
+          date: dayjs(date).format(),
+          status: true,
+          open: true,
+          items: lunchItem
+        })
       );
+    }
 
     setOpen(false);
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={open} onClose={handleClose} maxWidth={false}>
       <DialogTitle>Select Date</DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
         <TextField
           margin="dense"
           id="date"
@@ -47,15 +74,59 @@ export const FormDialog = ({ open, setOpen, type }) => {
           type="date"
           value={date}
           onChange={e => setDate(e.target.value)}
-          sx={{ width: 220 }}
+          sx={{ width: 250 }}
           InputLabelProps={{
             shrink: true
           }}
         />
+        {type === 'lunch' && (
+          <>
+            <FormControl sx={{ mt: 2 }} component="fieldset" variant="standard">
+              <FormLabel component="legend">Lunch Items</FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={lunchItem.includes('Fish')}
+                      onChange={handleChange}
+                      name="Fish"
+                    />
+                  }
+                  label="Fish"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={lunchItem.includes('Chicken')}
+                      onChange={handleChange}
+                      name="Chicken"
+                    />
+                  }
+                  label="Chicken"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={lunchItem.includes('Beef')}
+                      onChange={handleChange}
+                      name="Beef"
+                    />
+                  }
+                  label="Beef"
+                />
+              </FormGroup>
+            </FormControl>
+          </>
+        )}
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ p: 3, pt: 0 }}>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>OK</Button>
+        <Button
+          onClick={handleSubmit}
+          disabled={type === 'lunch' && !lunchItem.length}
+        >
+          OK
+        </Button>
       </DialogActions>
     </Dialog>
   );

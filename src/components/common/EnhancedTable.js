@@ -49,6 +49,7 @@ function EnhancedTableHead(props) {
           />
         </TableCell>
 
+        <TableCell>#</TableCell>
         <TableCell>Date</TableCell>
         <TableCell>User</TableCell>
         <TableCell align="center">Price</TableCell>
@@ -310,6 +311,7 @@ export default function EnhancedTable({
                         }}
                       />
                     </TableCell>
+                    <TableCell>{index + 1}</TableCell>
                     <TableCell>
                       {dayjs(row.date).format('DD MMM, YYYY')}
                     </TableCell>
