@@ -91,13 +91,21 @@ const LunchOrdersTable = ({ self }) => {
               ))}
 
               <TableRow>
+                <TableCell sx={{ borderBottom: 'none' }}></TableCell>
+                <TableCell sx={{ borderBottom: 'none', fontWeight: 600 }}>
+                  Total :
+                </TableCell>
                 <TableCell
-                  colSpan={2}
-                  sx={{ borderBottom: 'none' }}
-                ></TableCell>
-                <TableCell sx={{ borderBottom: 'none' }}>Total :</TableCell>
-                <TableCell align="center" sx={{ borderBottom: 'none' }}>
-                  {orders?.length || 0 * 90} /-
+                  align="center"
+                  sx={{ borderBottom: 'none', fontWeight: 600 }}
+                >
+                  {orders?.length}
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ borderBottom: 'none', fontWeight: 600 }}
+                >
+                  {Number(orders?.length || 0) * 90} /-
                 </TableCell>
               </TableRow>
             </>
