@@ -52,7 +52,7 @@ function EnhancedTableHead(props) {
         <TableCell>#</TableCell>
         <TableCell>Date</TableCell>
         <TableCell>User</TableCell>
-        <TableCell align="center">Price</TableCell>
+        <TableCell align="right">Price</TableCell>
       </TableRow>
     </TableHead>
   );
@@ -316,15 +316,18 @@ export default function EnhancedTable({
                       {dayjs(row.date).format('DD MMM, YYYY')}
                     </TableCell>
                     <TableCell>{row.userName}</TableCell>
-                    <TableCell align="center">{row.price} /-</TableCell>
+                    <TableCell align="right">{row.price} /-</TableCell>
                   </TableRow>
                 );
               })}
               <TableRow>
+                {/* <TableCell />
                 <TableCell />
                 <TableCell />
-                <TableCell />
-                <TableCell align="center">{getTotalPrice(orders)} /-</TableCell>
+                <TableCell /> */}
+                <TableCell align="right" colSpan={5}>
+                  {getTotalPrice(orders)} /-
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>

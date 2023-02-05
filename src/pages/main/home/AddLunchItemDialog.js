@@ -12,14 +12,12 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserLunchOrder } from 'redux/slices/lunchOrderSlice';
-import { useConfirmation } from 'providers/ConfirmationProvider';
 
 const AddLunchItemDialog = ({ open, setOpen }) => {
   const [selectedItem, setSelectedItem] = useState('');
 
   console.log({ selectedItem });
 
-  const confirm = useConfirmation();
   const { lunchOrder } = useSelector(state => state.lunchOrders);
 
   const { currentUser } = useSelector(state => state.users);
@@ -35,10 +33,6 @@ const AddLunchItemDialog = ({ open, setOpen }) => {
 
   const placeOrder = async () => {
     try {
-      await confirm({
-        variant: 'primary',
-        description: 'Are you sure you want to place the order?'
-      });
       await dispatch(
         addUserLunchOrder({
           id: lunchOrder?.id,
