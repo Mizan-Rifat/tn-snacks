@@ -1,5 +1,9 @@
 import {
+  FormControl,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -22,6 +26,14 @@ const MyLunchHistory = () => {
   useLunchOrderhistory();
 
   const [orders, setOrders] = useState(completedLunchOrders);
+  const [month, setMonth] = useState('');
+  const filterByMonth = ({ target: { value } }) => {
+    console.log(value);
+    // setUser(value);
+    setMonth(value);
+
+    setOrders(orders.filter(item => dayjs(item.date).format('MMMM') === value));
+  };
 
   useEffect(() => {
     setOrders(
@@ -31,6 +43,27 @@ const MyLunchHistory = () => {
 
   return (
     <>
+      <FormControl margin="dense" fullWidth size="small" sx={{ mb: 2 }}>
+        <InputLabel id="demo-simple-select-label">Month</InputLabel>
+        <Select
+          margin="dense"
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          label="Item"
+          value={month}
+          onChange={filterByMonth}
+        >
+          {[
+            ...new Set(
+              completedLunchOrders.map(item => dayjs(item.date).format('MMMM'))
+            )
+          ].map(item => (
+            <MenuItem key={item} value={item}>
+              {item}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <TableContainer component={Paper}>
         <Table size="small" aria-label="spanning table">
           <TableHead>
