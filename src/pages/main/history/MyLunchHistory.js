@@ -26,20 +26,25 @@ const MyLunchHistory = () => {
   useLunchOrderhistory();
 
   const [orders, setOrders] = useState(completedLunchOrders);
+  const [myOrders, setMyOrders] = useState([]);
   const [month, setMonth] = useState('');
-  const filterByMonth = ({ target: { value } }) => {
-    console.log(value);
-    // setUser(value);
-    setMonth(value);
 
-    setOrders(orders.filter(item => dayjs(item.date).format('MMMM') === value));
+  const filterByMonth = ({ target: { value } }) => {
+    setMonth(value);
+    setOrders(
+      myOrders.filter(item => dayjs(item.date).format('MMMM') === value)
+    );
   };
 
   useEffect(() => {
-    setOrders(
+    setMyOrders(
       completedLunchOrders.filter(item => item.userId === currentUser.id)
     );
   }, [completedLunchOrders]);
+
+  useEffect(() => {
+    setOrders(myOrders.filter(item => item.userId === currentUser.id));
+  }, [myOrders]);
 
   return (
     <>
