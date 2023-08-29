@@ -114,6 +114,16 @@ export const FormDialog = ({ open, setOpen, type }) => {
                   }
                   label="Beef"
                 />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={lunchItem.includes('Egg')}
+                      onChange={handleChange}
+                      name="Egg"
+                    />
+                  }
+                  label="Egg"
+                />
               </FormGroup>
             </FormControl>
           </>
